@@ -1,0 +1,44 @@
+Penjelasan Baris per Baris
+
+🔹 const { test, expect } = require('@playwright/test');
+Ini import modul dari Playwright. ambil dua hal:
+
+  1. test: buat definisi test case
+
+  2. expect: buat validasi/assert hasil test-nya
+
+📌 Analogi: Buka alat tempur automation, ambil “alat ngetes” dan “alat ngecek hasil”.
+
+🔹 test('Login gagal dengan kredensial salah', async ({ page }) => { ... });
+    Bikin 1 unit test dengan judul 'Login gagal dengan kredensial salah'
+    Test ini pakai async karena semua aksi di browser (kayak goto, fill, click) itu sifatnya asynchronous (butuh waktu tunggu).
+    Parameter ({ page }) artinya udah dapet 1 tab browser kosong buat diisi perintah (anggap page = 1 tab Chrome baru)
+📌 Analogi: "Hei Playwright, buka 1 browser baru, terus jalankan semua perintah ini."
+
+🔹 await page.goto('https://the-internet.herokuapp.com/login');
+    Ini buka halaman login di browser. await dipakai biar script nunggu sampai halaman selesai dimuat.
+📌 Analogi: "Buka halaman ini, dan tunggu sampai semua elemennya ready."
+
+🔹 await page.fill('#username', 'user_salah');
+🔹 await page.fill('#password', 'password_salah');
+    Mengisi form input berdasarkan selector CSS
+    #username artinya elemen dengan ID username
+    'user_salah' adalah teks yang dimasukin
+📌 "Cari kolom input username, ketik 'user_salah'"
+
+🔹 await page.click('button[type="submit"]');
+    Cari tombol yang atributnya type="submit" lalu klik.
+    Ini akan submit form login
+📌 "Klik tombol login"
+
+🔹 const errorMessage = await page.locator('#flash');
+    page.locator(...) = akses elemen di halaman
+    #flash adalah elemen yang muncul saat login gagal
+📌 "Ambil elemen yang muncul setelah login gagal"
+
+
+🔹 await expect(errorMessage).toContainText('Your username is invalid!');
+    Ini bagian assertion: lo ngecek apakah text error yang muncul mengandung kalimat 'Your username is invalid!'
+    Kalau iya → ✅ test PASSED
+    Kalau enggak → ❌ test FAILED
+📌 "Pastikan error-nya muncul dan isinya sesuai yang diharapkan"
